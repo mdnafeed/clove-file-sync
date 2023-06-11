@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path')
 const User = require('./models/userModel')
 const routes = require('./routes/route.js');
+require('./common/validator')
 
 require("dotenv").config({
  path: path.join(__dirname, "../.env")
