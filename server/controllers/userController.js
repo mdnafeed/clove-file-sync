@@ -1,5 +1,8 @@
 // Add this to the top of the file
 const { roles } = require('../roles')
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
  
 exports.grantAccess = function(action, resource) {
  return async (req, res, next) => {
@@ -31,11 +34,6 @@ exports.allowIfLoggedin = async (req, res, next) => {
   }
 }
 
-// server/controllers/userController.js
-
-const User = require('../models/userModel');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 async function hashPassword(password) {
  return await bcrypt.hash(password, 10);
