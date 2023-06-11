@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
+const  enquiryController  = require('../controllers/enquiryController');
 
 router.post('/signup', userController.signup);
 
@@ -17,5 +18,7 @@ router.put('/user/:userId', userController.allowIfLoggedin, userController.grant
 router.delete('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('deleteAny', 'profile'), userController.deleteUser);
 
 router.post('/category', userController.allowIfLoggedin,categoryController.category);
+
+router.post('/enquiry',enquiryController.enquiry);
 
 module.exports = router;

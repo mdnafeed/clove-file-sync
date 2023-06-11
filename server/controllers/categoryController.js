@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 
 
 exports.category = async (req, res, next) => {
-    console.log(req.body)
     try {
      const { title,slug } = req.body;
      const category = new Category({ title,slug });
