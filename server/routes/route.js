@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const categoryController = require('../controllers/categoryController');
 
 router.post('/signup', userController.signup);
 
@@ -14,5 +15,7 @@ router.get('/users', userController.allowIfLoggedin, userController.grantAccess(
 router.put('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('updateAny', 'profile'), userController.updateUser);
 
 router.delete('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('deleteAny', 'profile'), userController.deleteUser);
+
+router.post('/category', userController.allowIfLoggedin,categoryController.category);
 
 module.exports = router;
