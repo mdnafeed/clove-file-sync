@@ -29,6 +29,9 @@ const enquirySchema = new Schema({
     message:{
         type:String,
         maxLength:500,
+    },
+    lastActiveAt:{
+        type:Date
     }
 })
 
