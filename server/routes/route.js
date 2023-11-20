@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const  enquiryController  = require('../controllers/enquiryController');
 
+
 router.post('/signup', userController.signup);
 
 router.post('/login', userController.login);
