@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Image</title>
+</head>
+<body>
+    <img src="https://coreui.io/images/templates/coreui_pro_bright_light_dark_hu6331573698098662617.webp" width="400px" alt="">
+    <button id="download-btn">Download Image</button>
+
+    <script>
+        document.getElementById('download-btn').addEventListener('click', async function() {
+            const imageUrl = 'https://coreui.io/images/templates/coreui_pro_bright_light_dark_hu6331573698098662617.webp'; // Change to your image URL
+            
+            try {
+                // Fetch the image as a blob
+                const response = await fetch(imageUrl);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to download image');
+                }
+
+                const blob = await response.blob();
+
+                // Create a link element and trigger download
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'downloaded-image.jpg';  // Specify the file name for the downloaded image
+                document.body.appendChild(link);  // Append link to the body
+                link.click();  // Trigger the download
+                document.body.removeChild(link);  // Remove the link after download
+
+                // Show alert after successful download
+                alert('Image has been successfully downloaded!');
+
+            } catch (error) {
+                console.error('Error downloading image:', error);
+                alert('Error: Could not download image.');
+            }
+        });
+    </script>
+</body>
+</html>

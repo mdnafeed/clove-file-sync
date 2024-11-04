@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file"  multiple directory  id="file">
+    <button id="submit">Submit</button>
+</body>
+<script>
+    const submit = document.querySelector('#submit');
+    submit.addEventListener('click',async  function(){
+        const files = document.getElementById('file').files;
+        console.log(files)
+        // console.log(preparePayload(Array.from(files)))
+
+        const response = await fetch('http://localhost:3000/setup', {
+            method: 'POST',
+            body: JSON.stringify(preparePayload(Array.from(files))),
+        });
+        console.log(response);
+    })
+
+    function preparePayload(filesArray){
+        var data = []
+        filesArray.forEach((item,index) =>{
+            // let PicPath = `-PicPath${index+1}`;
+            // let PicInfo = `-PicInfo${index+1}`;
+            // let PicDate = `-PicDate${index+1}`;
+            // data.push({
+            //     "-PatId":"123", 
+            //     "-Firstname":"Test", 
+            //     "-Lastname":"Patient", 
+            //     "-Birthday":"19921016", 
+            //     "-Sex":"F",
+            //     "-PicCount":2,
+            //      PicPath:"D:/PRM/downloads/"+item.name, 
+            //      PicInfo:"Lateral Ceph", 
+            //      PicDate:"20000815" ,
+            // });
+
+            const dynamicPath = `-PicPath${index + 1}`;
+                const dynamicInfo = `-PicInfo${index + 1}`;
+                const dynamicDate = `-PicDate${index + 1}`;
+
+                // Push each file data with dynamic keys
+                let fileData = {
+                    "-PatId": "123",
+                    "-Firstname": "Test",
+                    "-Lastname": "Patient",
+                    "-Birthday": "19921016",
+                    "-Sex": "F",
+                    "-PicCount": filesArray.length,  // Total number of images
+                };
+
+                // Add dynamic fields for each file
+                fileData[dynamicPath] = "D:/PRM/downloads/" + item.name;  // Dynamic path
+                fileData[dynamicInfo] = "Lateral Ceph";                   // Dynamic info
+                fileData[dynamicDate] = "20000815";                        // Dynamic date
+
+                data.push(fileData);  // Push to the main payload array
+        });
+        return data;
+    }
+</script>
+</html>

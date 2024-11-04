@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg" width="200px" alt="">
+    <img src="https://images.pexels.com/photos/1388069/pexels-photo-1388069.jpeg" width="200px" alt="">
+    <img src="https://images.pexels.com/photos/4028947/pexels-photo-4028947.jpeg" width="200px" alt="">
+    <button id="download-btn">Download All Image</button>
+
+    <script>
+        
+        const listOfImage = [
+                "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg",
+                "https://images.pexels.com/photos/1388069/pexels-photo-1388069.jpeg",
+                "https://images.pexels.com/photos/4028947/pexels-photo-4028947.jpeg"
+        ]
+         document.getElementById('download-btn').addEventListener('click', async function() {
+            let allSuccess = true;
+            for(const imgUrl of listOfImage){
+                try{
+                    response = await fetch(imgUrl);
+
+                    if(!response.ok){
+                        alert('Failed to Download');
+                    }
+
+                    const blob = await response.blob();
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    
+                    const imageName = imgUrl.split('/').pop();  // Get the image name from the URL
+                    link.download = imageName;
+                    document.body.appendChild(link);  // Append link to the body
+
+                    link.click();  // Trigger the download
+                    document.body.removeChild(link);  // Remove the link after download
+
+                }
+                catch(error){
+                    allSuccess = false;
+                    console.log(error)
+                }
+            }
+
+            if(allSuccess){
+                alert('All images have been successfully downloaded!');
+            }
+         })
+    </script>
+</body>
+</html>
